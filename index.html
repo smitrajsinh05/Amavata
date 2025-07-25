@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rudraksha Hospital - Patient Record Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #2a6a4a; /* A calming green for Rudraksha */
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            width: calc(100% - 22px); /* Account for padding */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 100px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            margin-right: 15px;
+            display: inline-block;
+        }
+        button {
+            background-color: #4CAF50; /* Green submit button */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result-section {
+            background-color: #e6ffe6; /* Light green for results */
+            border-left: 5px solid #2a6a4a;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .result-section p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        .result-section strong {
+            color: #1a452d;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rudraksha Hospital</h1>
+        <h2>Patient Record Form</h2>
+
+        <form id="patientRecordForm">
+            <div class="form-section">
+                <h3>Patient Information</h3>
+                <div class="form-group">
+                    <label for="patientName">Full Name:</label>
+                    <input type="text" id="patientName" name="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male">
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                        <input type="radio" id="other" name="gender" value="other">
+                        <label for="other">Other</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contactNo">Contact Number:</label>
+                    <input type="text" id="contactNo" name="contactNo" pattern="[0-9]{10}" placeholder="e.g., 9876543210" title="Please enter a 10-digit phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email (Optional):</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="occupation">Occupation:</label>
+                    <input type="text" id="occupation" name="occupation">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>1. Symptoms</h3>
+                <div class="form-group">
+                    <label for="symptoms">Please describe all symptoms, their duration, and severity:</label>
+                    <textarea id="symptoms" name="symptoms" rows="8" placeholder="e.g., Joint pain in fingers and wrists for 3 months, worse in morning with stiffness (2 hours). Occasional low-grade fever. Poor digestion, feeling of heaviness."></textarea>
+                </div>
+                <button type="button" id="analyzeSymptoms">Analyze Symptoms</button>
+            </div>
+
+            <div class="form-section result-section">
+                <h3>2. Automatic Disease Analysis</h3>
+                <div id="diseaseResult">
+                    <p><em>Based on the symptoms entered, potential Ayurvedic imbalances/diseases will appear here.</em></p>
+                    <p><strong>Example:</strong> <br>
+                       <strong>Potential Imbalance:</strong> Ama Vata (leading to Amavata) <br>
+                       <strong>Primary Dosha Involvement:</strong> Vata & Kapha (aggravated), with significant Ama formation.<br>
+                       <em>(This section will be dynamically filled by your system's analysis.)</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-section result-section">
+                <h3>3. Automatic Formulation & Recommendations</h3>
+                <div id="formulationResult">
+                    <p><em>Based on the identified disease and symptoms, general Ayurvedic formulations and recommendations will appear here.</em></p>
+                    <p><strong>Example (for Amavata):</strong> <br>
+                       <strong>Dietary Advice:</strong> Avoid cold, heavy, fried foods, curd. Prefer warm, light, easily digestible meals (e.g., Kichadi). <br>
+                       <strong>Lifestyle:</strong> Gentle exercise, adequate rest, stress management, keep warm. <br>
+                       <strong>General Formulations:</strong> Simhanada Guggulu, Yogaraja Guggulu, Shunthi Churna (Dry Ginger powder).<br>
+                       <br>
+                       <em>(This section will be dynamically filled by your system's analysis.)</em>
+                    </p>
+                </div>
+            </div>
+
+            <button type="submit">Save Patient Record</button>
+        </form>
+
+        <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> The "Automatic Disease Analysis" and "Automatic Formulation & Recommendations" sections provide *informational suggestions only* based on the entered symptoms and Ayurvedic principles. This system is not a substitute for professional medical diagnosis or treatment. Always consult a qualified Ayurvedic physician or healthcare professional for personalized medical advice.</p>
+        </div>
+    </div>
+
+    <script>
+        // Placeholder for JavaScript logic
+        // In a real application, 'analyzeSymptoms' button click would:
+        // 1. Get symptoms from the textarea.
+        // 2. Send these symptoms to a backend server/API (e.g., using fetch() API).
+        // 3. The backend would run your Ayurvedic analysis logic (symptom -> disease -> formulation).
+        // 4. The backend would send back the results.
+        // 5. This JavaScript would then update the 'diseaseResult' and 'formulationResult' divs
+        //    with the data received from the backend.
+
+        document.getElementById('analyzeSymptoms').addEventListener('click', function() {
+            const symptoms = document.getElementById('symptoms').value;
+            if (symptoms.trim() === '') {
+                alert('Please enter symptoms to analyze.');
+                return;
+            }
+
+            // --- Mocking Backend Response for Demonstration ---
+            // In a real scenario, this would be a 'fetch' call to your server
+            console.log('Analyzing symptoms:', symptoms);
+
+            // Simulate an API call delay
+            setTimeout(() => {
+                let inferredDisease = "Potential Ayurvedic Imbalance: Aamvata (Rheumatoid Arthritis-like condition)";
+                let inferredFormulation = `
+                    <p><strong>Dietary Advice:</strong> Avoid cold, heavy, fried foods, curd. Prefer warm, light, easily digestible meals (e.g., Kichadi with ginger and turmeric), cooked vegetables. Avoid excessive sour and salty tastes. Ensure proper hydration with warm water.</p>
+                    <p><strong>Lifestyle:</strong> Engage in gentle, non-strenuous exercise (like specific yoga asanas), ensure adequate rest, manage stress through meditation or pranayama. Protect joints from cold and dampness. Maintain regular bowel movements.</p>
+                    <p><strong>General Formulations (Consult Vaidya for Dosage):</strong></p>
+                    <ul>
+                        <li><strong>For Ama digestion:</strong> Chitrakadi Vati, Agnitundi Vati, Shunthi Churna (Dry Ginger Powder).</li>
+                        <li><strong>For Pain & Inflammation:</strong> Simhanada Guggulu, Yogaraja Guggulu, Maharasnadi Kwath.</li>
+                        <li><strong>For Vata Balancing:</strong> Ashwagandha Churna, Dashamoola Arishta (after Ama digestion).</li>
+                        <li><strong>External Application:</strong> Mahanarayana Taila or Saindhavadi Taila for gentle massage (when Ama is low).</li>
+                    </ul>
+                `;
+
+                // If symptoms don't clearly match Aamvata, you might show a more general response or "needs more info"
+                if (!symptoms.toLowerCase().includes('joint pain') || !symptoms.toLowerCase().includes('stiffness')) {
+                    inferredDisease = "General Vata-Kapha Imbalance with Ama";
+                    inferredFormulation = "<p><em>More specific symptoms are needed for a precise Ayurvedic diagnosis. General recommendations include improving digestion, light diet, and managing stress.</em></p>";
+                }
+
+
+                document.getElementById('diseaseResult').innerHTML = `
+                    <p><strong>Identified Condition:</strong> ${inferredDisease}</p>
+                    <p><strong>Important Note:</strong> This is a preliminary assessment. A detailed consultation with a qualified Ayurvedic physician is essential for accurate diagnosis and personalized treatment plan.</p>
+                `;
+                document.getElementById('formulationResult').innerHTML = inferredFormulation;
+
+            }, 1000); // Simulate 1 second loading time
+        });
+
+        document.getElementById('patientRecordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // In a real application, you would collect all form data here
+            const patientData = {
+                name: document.getElementById('patientName').value,
+                dob: document.getElementById('dob').value,
+                gender: document.querySelector('input[name="gender"]:checked')?.value,
+                contact: document.getElementById('contactNo').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                occupation: document.getElementById('occupation').value,
+                symptoms: document.getElementById('symptoms').value,
+                // These would come from the analysis results, not directly from user input
+                // disease: document.getElementById('diseaseResult').innerText,
+                // formulation: document.getElementById('formulationResult').innerText,
+            };
+
+            console.log('Form Submitted:', patientData);
+            alert('Patient record saved! (This is a demo. Data is logged to console.)');
+
+            // Here you would typically send 'patientData' to your backend server
+            // fetch('/save-patient-record', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(patientData),
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            //     alert('Patient record saved successfully!');
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            //     alert('Error saving patient record.');
+            // });
+        });
+    </script>
+</body>
+</html>
