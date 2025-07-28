@@ -279,5 +279,59 @@
             // });
         });
     </script>
+
+<script>
+document.getElementById('analyzeSymptoms').addEventListener('click', function() {
+    const symptoms = document.getElementById('symptoms').value;
+    if (symptoms.trim() === '') {
+        alert('Please enter symptoms to analyze.');
+        return;
+    }
+
+    // Show loading message
+    document.getElementById('diseaseResult').innerHTML = '<p><em>Analyzing...</em></p>';
+    document.getElementById('formulationResult').innerHTML = '<p><em>Analyzing...</em></p>';
+
+    // API endpoint (PythonAnywhere live API)
+    const API_URL = 'https://smitrajsinh05.pythonanywhere.com/analyze_ayurveda';
+
+    fetch(API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ symptoms: symptoms }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Show disease result
+        let diseaseHtml = `<p><strong>Identified Condition:</strong> ${data.disease || 'No clear diagnosis'}</p>`;
+        diseaseHtml += `<p><strong>Dosha Scores:</strong> ${JSON.stringify(data.dosha_scores)}</p>`;
+        document.getElementById('diseaseResult').innerHTML = diseaseHtml;
+
+        // Show formulations & recommendations
+        let formulationHtml = '';
+        if (data.recommendations) {
+            formulationHtml += `<p><strong>Dietary Advice:</strong> ${data.recommendations.diet ? data.recommendations.diet.join(', ') : 'No advice'}</p>`;
+            formulationHtml += `<p><strong>Lifestyle:</strong> ${data.recommendations.lifestyle ? data.recommendations.lifestyle.join(', ') : 'No advice'}</p>`;
+            formulationHtml += `<p><strong>Formulations:</strong> ${data.recommendations.formulations ? data.recommendations.formulations.join(', ') : 'None listed'}</p>`;
+        } else {
+            formulationHtml = '<p>No recommendations available.</p>';
+        }
+        document.getElementById('formulationResult').innerHTML = formulationHtml;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('diseaseResult').innerHTML = '<p><em>Error analyzing symptoms.</em></p>';
+        document.getElementById('formulationResult').innerHTML = '<p><em>Please try again later.</em></p>';
+    });
+});
+</script>
+    
 </body>
 </html>
