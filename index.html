@@ -332,6 +332,55 @@ document.getElementById('analyzeSymptoms').addEventListener('click', function() 
     });
 });
 </script>
+
+    <script>
+document.getElementById('analyzeSymptoms').addEventListener('click', function() {
+    const symptoms = document.getElementById('symptoms').value.trim();
+    if (symptoms === '') {
+        alert('Please enter symptoms to analyze.');
+        return;
+    }
+
+    // Show loading
+    document.getElementById('diseaseResult').innerHTML = '<p><em>Analyzing...</em></p>';
+    document.getElementById('formulationResult').innerHTML = '<p><em>Analyzing...</em></p>';
+
+    // Your API endpoint
+    const API_URL = 'https://smitrajsinh05.pythonanywhere.com/analyze_ayurveda';
+
+    fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ symptoms: symptoms })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Disease result
+        let diseaseHtml = `<p><strong>Identified Condition:</strong> ${data.disease}</p>`;
+        diseaseHtml += `<p><strong>Dosha Scores:</strong> 
+                        Vata: ${data.dosha_scores.Vata.toFixed(1)}, 
+                        Pitta: ${data.dosha_scores.Pitta.toFixed(1)}, 
+                        Kapha: ${data.dosha_scores.Kapha.toFixed(1)}, 
+                        Ama: ${data.dosha_scores.Ama.toFixed(1)}</p>`;
+        diseaseHtml += `<p><em>Note: Preliminary analysis. Consult an Ayurvedic physician.</em></p>`;
+        document.getElementById('diseaseResult').innerHTML = diseaseHtml;
+
+        // Formulations & recommendations
+        let rec = data.recommendations;
+        let formulationHtml = `
+            <p><strong>Diet:</strong> ${rec.diet ? rec.diet.join(', ') : 'Not specified'}</p>
+            <p><strong>Lifestyle:</strong> ${rec.lifestyle ? rec.lifestyle.join(', ') : 'Not specified'}</p>
+            <p><strong>Formulations:</strong> ${rec.formulations ? rec.formulations.join(', ') : 'Not specified'}</p>
+        `;
+        document.getElementById('formulationResult').innerHTML = formulationHtml;
+    })
+    .catch(err => {
+        console.error(err);
+        document.getElementById('diseaseResult').innerHTML = '<p>Error analyzing symptoms.</p>';
+        document.getElementById('formulationResult').innerHTML = '';
+    });
+});
+    </script>
     
 </body>
 </html>
