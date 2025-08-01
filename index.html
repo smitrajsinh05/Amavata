@@ -3,110 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rudraksha Hospital - Patient Record Form</title>
+    <title>Rudraksha Hospital - Ayurvedic Assessment Center</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
+            font-family: 'Georgia', serif;
+            margin: 0;
             padding: 20px;
-            background-color: #f4f7f6;
+            background: linear-gradient(135deg, #FFF8DC 0%, #F5E6D3 100%);
             color: #333;
+            min-height: 100vh;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
             background-color: #fff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(210, 105, 30, 0.2);
         }
-        h1, h2 {
-            color: #2a6a4a; /* A calming green for Rudraksha */
+        
+        .header {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #D2691E, #CD853F);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .decorative-border {
+            height: 4px;
+            background: linear-gradient(90deg, #D2691E, #228B22, #CD853F);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+
+        .navigation-section {
+            margin-bottom: 40px;
+        }
+
+        .nav-title {
+            color: #D2691E;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        .assessments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .assessment-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(210, 105, 30, 0.1);
+            border: 2px solid #F5E6D3;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .assessment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #D2691E, #228B22, #CD853F);
+        }
+
+        .assessment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(210, 105, 30, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #D2691E;
+        }
+
+        .assessment-card h3 {
+            color: #228B22;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .assessment-card p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .assessment-btn {
+            background: linear-gradient(135deg, #D2691E, #CD853F);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .assessment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(210, 105, 30, 0.4);
+        }
+
+        .coming-soon {
+            opacity: 0.6;
+            position: relative;
+        }
+
+        .coming-soon .assessment-btn {
+            background: #ccc;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .coming-soon::after {
+            content: 'Coming Soon';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #FFB74D;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
         .form-section {
             margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            background-color: #fdfdfd;
+            padding: 25px;
+            border: 2px solid #F5E6D3;
+            border-radius: 15px;
+            background: #FFF8DC;
         }
+        
+        .form-section h3 {
+            color: #D2691E;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #F5E6D3;
+            padding-bottom: 10px;
+        }
+        
         .form-group {
             margin-bottom: 15px;
             display: flex;
             flex-direction: column;
         }
+        
         label {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: #555;
         }
+        
         input[type="text"],
         input[type="number"],
         input[type="date"],
+        input[type="email"],
         textarea,
         select {
-            width: calc(100% - 22px); /* Account for padding */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
             font-size: 16px;
-            box-sizing: border-box; /* Include padding in element's total width and height */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #D2691E;
+        }
+        
         textarea {
-            resize: vertical; /* Allow vertical resizing */
-            min-height: 100px;
+            resize: vertical;
+            min-height: 80px;
         }
+        
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
         .radio-group label {
             font-weight: normal;
-            margin-right: 15px;
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
         }
+        
         button {
-            background-color: #4CAF50; /* Green submit button */
+            background: linear-gradient(135deg, #228B22, #2E7D32);
             color: white;
-            padding: 12px 20px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
             width: 100%;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            font-weight: bold;
         }
+        
         button:hover {
-            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.4);
         }
-        .result-section {
-            background-color: #e6ffe6; /* Light green for results */
-            border-left: 5px solid #2a6a4a;
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-        .result-section p {
-            margin: 5px 0;
-            line-height: 1.6;
-        }
-        .result-section strong {
-            color: #1a452d;
-        }
+
         .disclaimer {
-            font-size: 0.9em;
-            color: #888;
-            margin-top: 20px;
+            background: #FFF3E0;
+            border: 2px solid #FFB74D;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
             text-align: center;
+            font-style: italic;
+            color: #E65100;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .assessments-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Rudraksha Hospital</h1>
-        <h2>Patient Record Form</h2>
+        <div class="header">
+            <h1><i class="fas fa-leaf"></i> Rudraksha Hospital</h1>
+            <p class="subtitle">Traditional Ayurvedic Assessment & Consultation Center</p>
+        </div>
+
+        <div class="decorative-border"></div>
+
+        <div class="navigation-section">
+            <h2 class="nav-title">🔍 Ayurvedic Assessment Categories</h2>
+            <div class="assessments-grid">
+                <div class="assessment-card">
+                    <div class="card-icon">🔥</div>
+                    <h3>Agni Dushti</h3>
+                    <p>Assess your digestive fire balance and identify imbalances in your digestive system according to Ayurvedic principles.</p>
+                    <a href="agni-dushti.html" class="assessment-btn">
+                        <i class="fas fa-play-circle"></i> Start Assessment
+                    </a>
+                </div>
+
+                <div class="assessment-card coming-soon">
+                    <div class="card-icon">🌪️</div>
+                    <h3>Sub Dosha Analysis</h3>
+                    <p>Detailed analysis of Vata, Pitta, and Kapha subdivisions to understand specific imbalances in your constitution.</p>
+                    <a href="#" class="assessment-btn">
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </a>
+                </div>
+
+                <div class="assessment-card coming-soon">
+                    <div class="card-icon">⚖️</div>
+                    <h3>Dosha Dushti</h3>
+                    <p>Comprehensive evaluation of primary dosha vitiation and imbalances affecting your overall health.</p>
+                    <a href="#" class="assessment-btn">
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </a>
+                </div>
+
+                <div class="assessment-card coming-soon">
+                    <div class="card-icon">🏗️</div>
+                    <h3>Dhatu Kshaya/Vridhi</h3>
+                    <p>Assessment of tissue deficiency (kshaya) or excess (vridhi) conditions in the seven dhatus of the body.</p>
+                    <a href="#" class="assessment-btn">
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </a>
+                </div>
+
+                <div class="assessment-card coming-soon">
+                    <div class="card-icon">🌊</div>
+                    <h3>Shroto Dushti</h3>
+                    <p>Evaluate channel blockages and pathway disorders that affect the flow of nutrients and waste in your body.</p>
+                    <a href="#" class="assessment-btn">
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </a>
+                </div>
+
+                <div class="assessment-card coming-soon">
+                    <div class="card-icon">📋</div>
+                    <h3>Complete Assessment</h3>
+                    <p>Comprehensive evaluation combining all assessment categories for a complete Ayurvedic health analysis.</p>
+                    <a href="#" class="assessment-btn">
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="decorative-border"></div>
 
         <form id="patientRecordForm">
             <div class="form-section">
-                <h3>Patient Information</h3>
+                <h3><i class="fas fa-user"></i> Patient Information</h3>
                 <div class="form-group">
                     <label for="patientName">Full Name:</label>
                     <input type="text" id="patientName" name="patientName" required>
@@ -118,12 +373,9 @@
                 <div class="form-group">
                     <label>Gender:</label>
                     <div class="radio-group">
-                        <input type="radio" id="male" name="gender" value="male">
-                        <label for="male">Male</label>
-                        <input type="radio" id="female" name="gender" value="female">
-                        <label for="female">Female</label>
-                        <input type="radio" id="other" name="gender" value="other">
-                        <label for="other">Other</label>
+                        <label><input type="radio" name="gender" value="male"> <i class="fas fa-male"></i> Male</label>
+                        <label><input type="radio" name="gender" value="female"> <i class="fas fa-female"></i> Female</label>
+                        <label><input type="radio" name="gender" value="other"> <i class="fas fa-user"></i> Other</label>
                     </div>
                 </div>
                 <div class="form-group">
@@ -144,105 +396,20 @@
                 </div>
             </div>
 
-            <div class="form-section">
-                <h3>1. Symptoms</h3>
-                <div class="form-group">
-                    <label for="symptoms">Please describe all symptoms, their duration, and severity:</label>
-                    <textarea id="symptoms" name="symptoms" rows="8" placeholder="e.g., Joint pain in fingers and wrists for 3 months, worse in morning with stiffness (2 hours). Occasional low-grade fever. Poor digestion, feeling of heaviness."></textarea>
-                </div>
-                <button type="button" id="analyzeSymptoms">Analyze Symptoms</button>
-            </div>
-
-            <div class="form-section result-section">
-                <h3>2. Automatic Disease Analysis</h3>
-                <div id="diseaseResult">
-                    <p><em>Based on the symptoms entered, potential Ayurvedic imbalances/diseases will appear here.</em></p>
-                    <p><strong>Example:</strong> <br>
-                       <strong>Potential Imbalance:</strong> Ama Vata (leading to Amavata) <br>
-                       <strong>Primary Dosha Involvement:</strong> Vata & Kapha (aggravated), with significant Ama formation.<br>
-                       <em>(This section will be dynamically filled by your system's analysis.)</em>
-                    </p>
-                </div>
-            </div>
-
-            <div class="form-section result-section">
-                <h3>3. Automatic Formulation & Recommendations</h3>
-                <div id="formulationResult">
-                    <p><em>Based on the identified disease and symptoms, general Ayurvedic formulations and recommendations will appear here.</em></p>
-                    <p><strong>Example (for Amavata):</strong> <br>
-                       <strong>Dietary Advice:</strong> Avoid cold, heavy, fried foods, curd. Prefer warm, light, easily digestible meals (e.g., Kichadi). <br>
-                       <strong>Lifestyle:</strong> Gentle exercise, adequate rest, stress management, keep warm. <br>
-                       <strong>General Formulations:</strong> Simhanada Guggulu, Yogaraja Guggulu, Shunthi Churna (Dry Ginger powder).<br>
-                       <br>
-                       <em>(This section will be dynamically filled by your system's analysis.)</em>
-                    </p>
-                </div>
-            </div>
-
-            <button type="submit">Save Patient Record</button>
+            <button type="submit">
+                <i class="fas fa-save"></i> Save Patient Record
+            </button>
         </form>
 
         <div class="disclaimer">
-            <p><strong>Disclaimer:</strong> The "Automatic Disease Analysis" and "Automatic Formulation & Recommendations" sections provide *informational suggestions only* based on the entered symptoms and Ayurvedic principles. This system is not a substitute for professional medical diagnosis or treatment. Always consult a qualified Ayurvedic physician or healthcare professional for personalized medical advice.</p>
+            <p><strong>Disclaimer:</strong> These assessments provide informational suggestions only based on traditional Ayurvedic principles. They are not substitutes for professional medical diagnosis or treatment. Always consult a qualified Ayurvedic physician or healthcare professional for personalized medical advice and treatment.</p>
         </div>
     </div>
 
     <script>
-        // Placeholder for JavaScript logic
-        // In a real application, 'analyzeSymptoms' button click would:
-        // 1. Get symptoms from the textarea.
-        // 2. Send these symptoms to a backend server/API (e.g., using fetch() API).
-        // 3. The backend would run your Ayurvedic analysis logic (symptom -> disease -> formulation).
-        // 4. The backend would send back the results.
-        // 5. This JavaScript would then update the 'diseaseResult' and 'formulationResult' divs
-        //    with the data received from the backend.
-
-        document.getElementById('analyzeSymptoms').addEventListener('click', function() {
-            const symptoms = document.getElementById('symptoms').value;
-            if (symptoms.trim() === '') {
-                alert('Please enter symptoms to analyze.');
-                return;
-            }
-
-            // --- Mocking Backend Response for Demonstration ---
-            // In a real scenario, this would be a 'fetch' call to your server
-            console.log('Analyzing symptoms:', symptoms);
-
-            // Simulate an API call delay
-            setTimeout(() => {
-                let inferredDisease = "Potential Ayurvedic Imbalance: Aamvata (Rheumatoid Arthritis-like condition)";
-                let inferredFormulation = `
-                    <p><strong>Dietary Advice:</strong> Avoid cold, heavy, fried foods, curd. Prefer warm, light, easily digestible meals (e.g., Kichadi with ginger and turmeric), cooked vegetables. Avoid excessive sour and salty tastes. Ensure proper hydration with warm water.</p>
-                    <p><strong>Lifestyle:</strong> Engage in gentle, non-strenuous exercise (like specific yoga asanas), ensure adequate rest, manage stress through meditation or pranayama. Protect joints from cold and dampness. Maintain regular bowel movements.</p>
-                    <p><strong>General Formulations (Consult Vaidya for Dosage):</strong></p>
-                    <ul>
-                        <li><strong>For Ama digestion:</strong> Chitrakadi Vati, Agnitundi Vati, Shunthi Churna (Dry Ginger Powder).</li>
-                        <li><strong>For Pain & Inflammation:</strong> Simhanada Guggulu, Yogaraja Guggulu, Maharasnadi Kwath.</li>
-                        <li><strong>For Vata Balancing:</strong> Ashwagandha Churna, Dashamoola Arishta (after Ama digestion).</li>
-                        <li><strong>External Application:</strong> Mahanarayana Taila or Saindhavadi Taila for gentle massage (when Ama is low).</li>
-                    </ul>
-                `;
-
-                // If symptoms don't clearly match Aamvata, you might show a more general response or "needs more info"
-                if (!symptoms.toLowerCase().includes('joint pain') || !symptoms.toLowerCase().includes('stiffness')) {
-                    inferredDisease = "General Vata-Kapha Imbalance with Ama";
-                    inferredFormulation = "<p><em>More specific symptoms are needed for a precise Ayurvedic diagnosis. General recommendations include improving digestion, light diet, and managing stress.</em></p>";
-                }
-
-
-                document.getElementById('diseaseResult').innerHTML = `
-                    <p><strong>Identified Condition:</strong> ${inferredDisease}</p>
-                    <p><strong>Important Note:</strong> This is a preliminary assessment. A detailed consultation with a qualified Ayurvedic physician is essential for accurate diagnosis and personalized treatment plan.</p>
-                `;
-                document.getElementById('formulationResult').innerHTML = inferredFormulation;
-
-            }, 1000); // Simulate 1 second loading time
-        });
-
         document.getElementById('patientRecordForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
-            // In a real application, you would collect all form data here
             const patientData = {
                 name: document.getElementById('patientName').value,
                 dob: document.getElementById('dob').value,
@@ -251,136 +418,18 @@
                 email: document.getElementById('email').value,
                 address: document.getElementById('address').value,
                 occupation: document.getElementById('occupation').value,
-                symptoms: document.getElementById('symptoms').value,
-                // These would come from the analysis results, not directly from user input
-                // disease: document.getElementById('diseaseResult').innerText,
-                // formulation: document.getElementById('formulationResult').innerText,
             };
 
             console.log('Form Submitted:', patientData);
             alert('Patient record saved! (This is a demo. Data is logged to console.)');
 
-            // Here you would typically send 'patientData' to your backend server
+            // Here you would send data to your backend
             // fetch('/save-patient-record', {
             //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
+            //     headers: { 'Content-Type': 'application/json' },
             //     body: JSON.stringify(patientData),
             // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     console.log('Success:', data);
-            //     alert('Patient record saved successfully!');
-            // })
-            // .catch((error) => {
-            //     console.error('Error:', error);
-            //     alert('Error saving patient record.');
-            // });
         });
     </script>
-
-<script>
-document.getElementById('analyzeSymptoms').addEventListener('click', function() {
-    const symptoms = document.getElementById('symptoms').value;
-    if (symptoms.trim() === '') {
-        alert('Please enter symptoms to analyze.');
-        return;
-    }
-
-    // Show loading message
-    document.getElementById('diseaseResult').innerHTML = '<p><em>Analyzing...</em></p>';
-    document.getElementById('formulationResult').innerHTML = '<p><em>Analyzing...</em></p>';
-
-    // API endpoint (PythonAnywhere live API)
-    const API_URL = 'https://smitrajsinh05.pythonanywhere.com/analyze_ayurveda';
-
-    fetch(API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ symptoms: symptoms }),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Show disease result
-        let diseaseHtml = `<p><strong>Identified Condition:</strong> ${data.disease || 'No clear diagnosis'}</p>`;
-        diseaseHtml += `<p><strong>Dosha Scores:</strong> ${JSON.stringify(data.dosha_scores)}</p>`;
-        document.getElementById('diseaseResult').innerHTML = diseaseHtml;
-
-        // Show formulations & recommendations
-        let formulationHtml = '';
-        if (data.recommendations) {
-            formulationHtml += `<p><strong>Dietary Advice:</strong> ${data.recommendations.diet ? data.recommendations.diet.join(', ') : 'No advice'}</p>`;
-            formulationHtml += `<p><strong>Lifestyle:</strong> ${data.recommendations.lifestyle ? data.recommendations.lifestyle.join(', ') : 'No advice'}</p>`;
-            formulationHtml += `<p><strong>Formulations:</strong> ${data.recommendations.formulations ? data.recommendations.formulations.join(', ') : 'None listed'}</p>`;
-        } else {
-            formulationHtml = '<p>No recommendations available.</p>';
-        }
-        document.getElementById('formulationResult').innerHTML = formulationHtml;
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('diseaseResult').innerHTML = '<p><em>Error analyzing symptoms.</em></p>';
-        document.getElementById('formulationResult').innerHTML = '<p><em>Please try again later.</em></p>';
-    });
-});
-</script>
-
-    <script>
-document.getElementById('analyzeSymptoms').addEventListener('click', function() {
-    const symptoms = document.getElementById('symptoms').value.trim();
-    if (symptoms === '') {
-        alert('Please enter symptoms to analyze.');
-        return;
-    }
-
-    // Show loading
-    document.getElementById('diseaseResult').innerHTML = '<p><em>Analyzing...</em></p>';
-    document.getElementById('formulationResult').innerHTML = '<p><em>Analyzing...</em></p>';
-
-    // Your API endpoint
-    const API_URL = 'https://smitrajsinh05.pythonanywhere.com/analyze_ayurveda';
-
-    fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ symptoms: symptoms })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Disease result
-        let diseaseHtml = `<p><strong>Identified Condition:</strong> ${data.disease}</p>`;
-        diseaseHtml += `<p><strong>Dosha Scores:</strong> 
-                        Vata: ${data.dosha_scores.Vata.toFixed(1)}, 
-                        Pitta: ${data.dosha_scores.Pitta.toFixed(1)}, 
-                        Kapha: ${data.dosha_scores.Kapha.toFixed(1)}, 
-                        Ama: ${data.dosha_scores.Ama.toFixed(1)}</p>`;
-        diseaseHtml += `<p><em>Note: Preliminary analysis. Consult an Ayurvedic physician.</em></p>`;
-        document.getElementById('diseaseResult').innerHTML = diseaseHtml;
-
-        // Formulations & recommendations
-        let rec = data.recommendations;
-        let formulationHtml = `
-            <p><strong>Diet:</strong> ${rec.diet ? rec.diet.join(', ') : 'Not specified'}</p>
-            <p><strong>Lifestyle:</strong> ${rec.lifestyle ? rec.lifestyle.join(', ') : 'Not specified'}</p>
-            <p><strong>Formulations:</strong> ${rec.formulations ? rec.formulations.join(', ') : 'Not specified'}</p>
-        `;
-        document.getElementById('formulationResult').innerHTML = formulationHtml;
-    })
-    .catch(err => {
-        console.error(err);
-        document.getElementById('diseaseResult').innerHTML = '<p>Error analyzing symptoms.</p>';
-        document.getElementById('formulationResult').innerHTML = '';
-    });
-});
-    </script>
-    
 </body>
 </html>
